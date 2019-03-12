@@ -6,7 +6,7 @@ public class Multiplication {
     private String alphabet = "abcdefghijklmnopqrstuwxyz";
 
     private void start() {
-        System.out.println("Enter the key (3, 5, 9):");
+        System.out.println("Enter the key (3-9,5-21, 9-3):");
         Scanner in = new Scanner(System.in);
         int pass = in.nextInt();
 
@@ -17,16 +17,16 @@ public class Multiplication {
         encryption(ttext, pass);
         System.out.println("------------------Decryption process start----------");
 
-
-        System.out.println("Enter the key (3, 5, 9):");
-        pass = in.nextInt();
-
-        switch (pass){
-            case 3: key = 9;
-            case 5: key = 21;
-            case 9: key = 3;
+        while(key == 0) {
+            System.out.println("Enter the key:");
+            pass = in.nextInt();
+            for (int i = 1; i <= 26; i++) {
+                if (!((i == 1) || (i % 2 == 0) || (i == 13) || (i == pass)) && (i * pass) % 26 == 1)
+                    key = i;
+            }
         }
 
+        System.out.println(key);
         System.out.println("Enter the cipherText for decryption:");
         String cipherText = inn.nextLine();
         decryption(cipherText);
@@ -37,11 +37,11 @@ public class Multiplication {
         char[] textEncrypt = cipherText.toCharArray();
         StringBuilder decryptWord = new StringBuilder();
 
-        for (char ch : textEncrypt) {
-            if (ch == '*')
+        for (char ch : textEncrypt){
+            if(ch == '*')
                 decryptWord.append(' ');
             else
-                decryptWord.append(alphabet.toCharArray()[(((alphabet.indexOf(ch)) * key)) % 26]);
+                decryptWord.append(alphabet.toCharArray()[(((alphabet.indexOf(ch))*key))%26]);
         }
         System.out.println(decryptWord);
     }
@@ -50,11 +50,11 @@ public class Multiplication {
         char[] textEncrypt = plaintext.toCharArray();
         StringBuilder encryptWord = new StringBuilder();
 
-        for (char ch : textEncrypt) {
-            if (ch == ' ')
+        for (char ch : textEncrypt){
+            if(ch == ' ')
                 encryptWord.append('*');
             else
-                encryptWord.append(alphabet.toCharArray()[((alphabet.indexOf(ch)) * pass) % 26]);
+                encryptWord.append(alphabet.toCharArray()[((alphabet.indexOf(ch))*pass)%26]);
         }
         System.out.println(encryptWord);
     }
